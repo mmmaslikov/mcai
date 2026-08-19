@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мастер-класс по ИИ | Масликов М.М.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource-inter@4.5.0/index.min.css">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .prompt-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .ai-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+        }
+        
+        .copy-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .copy-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #667eea;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-xl font-bold text-gray-800">
+                    Мастер-класс по ИИ
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#prompting" class="nav-link text-gray-600 hover:text-gray-800">Промптинг</a>
+                    <a href="#ai-tools" class="nav-link text-gray-600 hover:text-gray-800">ИИ-сервисы</a>
+                    <a href="#example" class="nav-link text-gray-600 hover:text-gray-800">Пример</a>
+                    <a href="#team" class="nav-link text-gray-600 hover:text-gray-800">Команда</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white pt-32 pb-20">
+        <div class="container mx-auto px-6 text-center fade-in">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                Вводный мастер-класс по ИИ
+            </h1>
+            <p class="text-xl md:text-2xl mb-4 opacity-90">
+                Современные инструменты для учителей информатики
+            </p>
+            <div class="mt-8 text-lg opacity-80">
+                <p class="mb-2">Масликов Михаил Михайлович</p>
+                <p>ЧОУ "ОК Точка будущего"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: Prompting -->
+    <section id="prompting" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                🎯 Промптинг
+            </h2>
+            <p class="text-center text-gray-600 mb-12 text-lg">
+                Три основных промта для создания качественного урока
+            </p>
+
+            <div class="grid md:grid-cols-1 gap-8 max-w-5xl mx-auto">
+                <!-- Prompt 1 -->
+                <div class="prompt-card rounded-xl p-8 card-hover">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-gray-800">
+                            Шаг 1: Создание плана урока
+                        </h3>
+                        <button onclick="copyPrompt(1)" class="copy-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
+                            Копировать
+                        </button>
+                    </div>
+                    <div id="prompt1" class="bg-white rounded-lg p-6 text-gray-700 leading-relaxed">
+                        Ты — опытный учитель информатики. Составь план урока по теме «[тема]» для [класс], [длительность] минут. Структура: оргмомент, актуализация, объяснение нового материала, практическая часть, рефлексия — с таймингом каждого этапа и практическим заданием.
+                    </div>
+                </div>
+
+                <!-- Prompt 2 -->
+                <div class="prompt-card rounded-xl p-8 card-hover">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-gray-800">
+                            Шаг 2: Рецензия методиста
+                        </h3>
+                        <button onclick="copyPrompt(2)" class="copy-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
+                            Копировать
+                        </button>
+                    </div>
+                    <div id="prompt2" class="bg-white rounded-lg p-6 text-gray-700 leading-relaxed">
+                        Ты — методист, эксперт по проверке качества уроков информатики. Не переписывай урок сам — дай только рецензию. Оцени план урока ниже по критериям: соответствие возрасту, реалистичность тайминга, наличие практики, дифференциация для сильных/слабых учеников, вовлечённость. По каждому критерию — конкретная рекомендация.<br><br>
+                        ПЛАН УРОКА: [вставьте черновик из Шага 1]
+                    </div>
+                </div>
+
+                <!-- Prompt 3 -->
+                <div class="prompt-card rounded-xl p-8 card-hover">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-gray-800">
+                            Шаг 3: Оценка аттестационной комиссии
+                        </h3>
+                        <button onclick="copyPrompt(3)" class="copy-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
+                            Копировать
+                        </button>
+                    </div>
+                    <div id="prompt3" class="bg-white rounded-lg p-6 text-gray-700 leading-relaxed">
+                        Ты — аттестационная комиссия, оценивающая план урока по формальным критериям. Оцени по 5-балльной шкале каждый критерий: соответствие программе, практическая ценность, вовлечённость, реалистичность тайминга, дифференциация. Дай итоговый балл и 2-3 замечания. Рекомендаций не давай — только оценку, как в реальном протоколе.<br><br>
+                        ПЛАН УРОКА: [вставьте исправленную версию после Шага 2]
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Hub Link -->
+            <div class="mt-12 text-center">
+                <div class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-8 max-w-3xl">
+                    <h3 class="text-2xl font-bold text-white mb-4">
+                        🚀 Автоматическое создание промтов
+                    </h3>
+                    <p class="text-white mb-6 opacity-90">
+                        Сервис для генерации любых промтов под ваши задачи
+                    </p>
+                    <a href="https://mashuk.online/aihub" target="_blank" class="inline-block bg-white text-purple-600 font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-all">
+                        Перейти на mashuk.online/aihub →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: AI Tools -->
+    <section id="ai-tools" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                🤖 Основные ИИ-сервисы
+            </h2>
+            <p class="text-center text-gray-600 mb-12 text-lg">
+                Лучшие инструменты для работы учителя
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Gigachad -->
+                <div class="ai-card rounded-xl p-8 card-hover border-2 border-transparent hover:border-blue-500">
+                    <div class="text-6xl mb-4 text-center">🏆</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">
+                        Гигачад
+                    </h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Лучший ИИ в русскоязычном сегменте. Отличное понимание контекста, качественная генерация текстов и кода на русском языке.
+                    </p>
+                    <div class="text-center">
+                        <span class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">
+                            Лучший в RU
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Perplexity -->
+                <div class="ai-card rounded-xl p-8 card-hover border-2 border-transparent hover:border-green-500">
+                    <div class="text-6xl mb-4 text-center">📚</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">
+                        Perplexity
+                    </h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Создание пространств (проектов) с заданными характеристиками и вложенными документами. Идеально для работы с ФГОС и методическими материалами.
+                    </p>
+                    <div class="text-center">
+                        <span class="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">
+                            Работа с документами
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Qwen -->
+                <div class="ai-card rounded-xl p-8 card-hover border-2 border-transparent hover:border-purple-500">
+                    <div class="text-6xl mb-4 text-center">🎨</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">
+                        Qwen
+                    </h3>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Работа с артефактами. Создание интерактивных материалов, визуализаций и сложных структурированных документов.
+                    </p>
+                    <div class="text-center">
+                        <span class="inline-block bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold">
+                            Артефакты
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Example -->
+    <section id="example" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                💡 Пример методической разработки
+            </h2>
+            <p class="text-center text-gray-600 mb-12 text-lg">
+                Современный подход к созданию учебных материалов
+            </p>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12 border-2 border-blue-200">
+                    <div class="text-center mb-8">
+                        <div class="text-6xl mb-4">📖</div>
+                        <h3 class="text-3xl font-bold text-gray-800 mb-4">
+                            DataMirror
+                        </h3>
+                        <p class="text-gray-600 text-lg leading-relaxed">
+                            Полноценная методическая разработка для проведения урока. Все материалы для учителя и ученика в одном месте.
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white rounded-lg p-6">
+                            <div class="text-2xl mb-2">✅</div>
+                            <h4 class="font-bold text-gray-800 mb-2">Для учителя</h4>
+                            <p class="text-gray-600 text-sm">
+                                Подробный план урока, методические указания, материалы для объяснения
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6">
+                            <div class="text-2xl mb-2">🎓</div>
+                            <h4 class="font-bold text-gray-800 mb-2">Для ученика</h4>
+                            <p class="text-gray-600 text-sm">
+                                Интерактивные задания, практические работы, материалы для самостоятельной работы
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6">
+                            <div class="text-2xl mb-2">🎨</div>
+                            <h4 class="font-bold text-gray-800 mb-2">Современный дизайн</h4>
+                            <p class="text-gray-600 text-sm">
+                                Удобный интерфейс, адаптивная верстка, приятная визуализация
+                            </p>
+                        </div>
+                        <div class="bg-white rounded-lg p-6">
+                            <div class="text-2xl mb-2">⚡</div>
+                            <h4 class="font-bold text-gray-800 mb-2">Интерактивность</h4>
+                            <p class="text-gray-600 text-sm">
+                                Динамические элементы, мгновенная обратная связь, вовлекающий контент
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="https://mmmaslikov.github.io/datamirror/" target="_blank" class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold px-8 py-4 rounded-lg hover:shadow-xl transition-all text-lg">
+                            Открыть методическую разработку →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Team -->
+    <section id="team" class="py-20 gradient-bg text-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center mb-4">
+                🌟 Творческая проектировочная группа
+            </h2>
+            <p class="text-center text-xl mb-12 opacity-90">
+                Присоединяйтесь к команде инноваторов
+            </p>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white border-opacity-20">
+                    <div class="text-center mb-8">
+                        <p class="text-lg leading-relaxed mb-6">
+                            В нашей школе создаются творческие проектировочные группы педагогов, которые будут работать над актуальными темами и создавать современные образовательные продукты.
+                        </p>
+                        <div class="bg-yellow-400 bg-opacity-20 border-2 border-yellow-400 rounded-xl p-6 mb-8">
+                            <p class="text-xl font-bold">
+                                📢 Скоро будет опубликована анкета для учителей, которые хотят стать частью моей команды!
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-2xl font-bold mb-6 text-center">Чем мы будем заниматься:</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-4 mb-8">
+                        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex items-start">
+                            <span class="text-2xl mr-3">📝</span>
+                            <span>Создавать современные методические разработки</span>
+                        </div>
+                        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex items-start">
+                            <span class="text-2xl mr-3">🌐</span>
+                            <span>Создавать образовательные сайты</span>
+                        </div>
+                        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex items-start">
+                            <span class="text-2xl mr-3">🎨</span>
+                            <span>Использовать нейросети для создания презентаций и документов</span>
+                        </div>
+                        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex items-start">
+                            <span class="text-2xl mr-3">📊</span>
+                            <span>Анализировать большие объемы информации</span>
+                        </div>
+                        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex items-start md:col-span-2">
+                            <span class="text-2xl mr-3">⚙️</span>
+                            <span>Упрощать рутинную работу учителей с помощью ИИ-инструментов</span>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <p class="text-lg opacity-90">
+                            Следите за обновлениями и станьте частью команды, которая меняет образование!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="mb-2">Масликов Михаил Михайлович</p>
+            <p class="text-gray-400">ЧОУ "ОК Точка будущего" | 2026</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyPrompt(number) {
+            const promptElement = document.getElementById(`prompt${number}`);
+            const text = promptElement.innerText;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const buttons = document.querySelectorAll('.copy-btn');
+                const button = buttons[number - 1];
+                const originalText = button.innerText;
+                
+                button.innerText = '✓ Скопировано!';
+                button.classList.remove('bg-blue-500', 'hover:bg-blue-600');
+                button.classList.add('bg-green-500');
+                
+                setTimeout(() => {
+                    button.innerText = originalText;
+                    button.classList.remove('bg-green-500');
+                    button.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                }, 2000);
+            }).catch(err => {
+                console.error('Ошибка копирования:', err);
+            });
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
