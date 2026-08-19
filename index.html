@@ -172,12 +172,13 @@
         }
 
         .prompt-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: white;
             border-radius: 1rem;
             padding: 2rem;
             margin-bottom: 2rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e2e8f0;
         }
 
         .prompt-card:hover {
@@ -224,7 +225,7 @@
         }
 
         .prompt-content {
-            background: white;
+            background: #f7fafc;
             padding: 1.5rem;
             border-radius: 0.5rem;
             color: var(--dark);
@@ -307,6 +308,16 @@
             font-weight: 700;
             margin-bottom: 1rem;
             color: var(--dark);
+        }
+
+        .tool-title a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .tool-title a:hover {
+            color: var(--primary);
         }
 
         .tool-description {
@@ -598,8 +609,8 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Вводный мастер-класс по ИИ</h1>
-            <p class="subtitle">Современные инструменты для учителей информатики</p>
+            <h1>Инструменты современного учителея</h1>
+            <p class="subtitle">Вводный мастер-класс по ИИ</p>
             <div class="author">
                 <p><strong>Масликов Михаил Михайлович</strong></p>
                 <p>ЧОУ "ОК Точка будущего"</p>
@@ -610,7 +621,7 @@
     <!-- Prompting Section -->
     <section id="prompting" class="prompting">
         <div class="container">
-            <h2 class="section-title">🎯 Промптинг</h2>
+            <h2 class="section-title"> Промптинг</h2>
             <p class="section-subtitle">Три основных промта для создания качественного урока</p>
 
             <div class="prompt-card">
@@ -662,7 +673,9 @@
             <div class="tools-grid">
                 <div class="tool-card">
                     <div class="tool-icon">🏆</div>
-                    <h3 class="tool-title">Гигачад</h3>
+                    <h3 class="tool-title">
+                        <a href="https://giga.chat/" target="_blank">Гигачат</a>
+                    </h3>
                     <p class="tool-description">
                         Лучший ИИ в русскоязычном сегменте. Отличное понимание контекста, качественная генерация текстов и кода на русском языке.
                     </p>
@@ -671,7 +684,9 @@
 
                 <div class="tool-card">
                     <div class="tool-icon">📚</div>
-                    <h3 class="tool-title">Perplexity</h3>
+                    <h3 class="tool-title">
+                        <a href="https://www.perplexity.ai/" target="_blank">Perplexity</a>
+                    </h3>
                     <p class="tool-description">
                         Создание пространств (проектов) с заданными характеристиками и вложенными документами. Идеально для работы с ФГОС и методическими материалами.
                     </p>
@@ -680,7 +695,9 @@
 
                 <div class="tool-card">
                     <div class="tool-icon">🎨</div>
-                    <h3 class="tool-title">Qwen</h3>
+                    <h3 class="tool-title">
+                        <a href="https://chat.qwen.ai/" target="_blank">Qwen</a>
+                    </h3>
                     <p class="tool-description">
                         Работа с артефактами. Создание интерактивных материалов, визуализаций и сложных структурированных документов.
                     </p>
@@ -717,11 +734,6 @@
                         <div class="feature-description">Интерактивные задания, практические работы, материалы для самостоятельной работы</div>
                     </div>
                     <div class="feature-item">
-                        <div class="feature-icon">🎨</div>
-                        <div class="feature-title">Современный дизайн</div>
-                        <div class="feature-description">Удобный интерфейс, адаптивная верстка, приятная визуализация</div>
-                    </div>
-                    <div class="feature-item">
                         <div class="feature-icon">⚡</div>
                         <div class="feature-title">Интерактивность</div>
                         <div class="feature-description">Динамические элементы, мгновенная обратная связь, вовлекающий контент</div>
@@ -744,12 +756,12 @@
             <div class="team-card">
                 <div class="team-intro">
                     <p>
-                        В нашей школе создаются творческие проектировочные группы педагогов, которые будут работать над актуальными темами и создавать современные образовательные продукты.
+                        ГенИИ - Исследование актуальных сервисов и создание современных образовательных продуктов.
                     </p>
                 </div>
 
                 <div class="announcement">
-                    📢 Скоро будет опубликована анкета для учителей, которые хотят стать частью моей команды!
+                    📢 Скоро будет опубликована анкета о заинтересованности для учителей, которые хотят стать частью моей команды!
                 </div>
 
                 <div class="team-activities">
@@ -760,11 +772,11 @@
                             <span class="activity-text">Создавать современные методические разработки</span>
                         </div>
                         <div class="activity-item">
-                            <span class="activity-icon">🌐</span>
-                            <span class="activity-text">Создавать образовательные сайты</span>
+                            <span class="activity-icon">🤖</span>
+                            <span class="activity-text">Проектировать образовательные сайты</span>
                         </div>
                         <div class="activity-item">
-                            <span class="activity-icon">🎨</span>
+                            <span class="activity-icon">📚</span>
                             <span class="activity-text">Использовать нейросети для создания презентаций и документов</span>
                         </div>
                         <div class="activity-item">
@@ -772,8 +784,12 @@
                             <span class="activity-text">Анализировать большие объемы информации</span>
                         </div>
                         <div class="activity-item">
-                            <span class="activity-icon">️</span>
+                            <span class="activity-icon">⚙️</span>
                             <span class="activity-text">Упрощать рутинную работу учителей с помощью ИИ-инструментов</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">🚀</span>
+                            <span class="activity-text">Внедрять инновационные технологии в образовательный процесс</span>
                         </div>
                     </div>
                 </div>
