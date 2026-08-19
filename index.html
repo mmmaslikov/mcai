@@ -4,385 +4,791 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Мастер-класс по ИИ | Масликов М.М.</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource-inter@4.5.0/index.min.css">
     <style>
         * {
-            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --dark: #1a202c;
+            --light: #f7fafc;
+            --gray: #718096;
+            --success: #48bb78;
         }
-        
-        .card-hover {
-            transition: all 0.3s ease;
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
         }
-        
-        .card-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+
+        html {
+            scroll-behavior: smooth;
         }
-        
-        .fade-in {
-            animation: fadeIn 0.8s ease-in;
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 1rem 0;
         }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
-        .prompt-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--dark);
         }
-        
-        .ai-card {
-            background: linear-gradient(135deg, #ffffff 0%, #f0f4f8 100%);
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
         }
-        
-        .copy-btn {
-            transition: all 0.2s ease;
-        }
-        
-        .copy-btn:hover {
-            transform: scale(1.05);
-        }
-        
-        .copy-btn:active {
-            transform: scale(0.95);
-        }
-        
-        .nav-link {
+
+        .nav-links a {
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
             position: relative;
-            transition: color 0.3s ease;
         }
-        
-        .nav-link::after {
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
             content: '';
             position: absolute;
             bottom: -5px;
             left: 0;
             width: 0;
             height: 2px;
-            background: #667eea;
-            transition: width 0.3s ease;
+            background: var(--primary);
+            transition: width 0.3s;
         }
-        
-        .nav-link:hover::after {
+
+        .nav-links a:hover::after {
             width: 100%;
         }
-        
-        html {
-            scroll-behavior: smooth;
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 10rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            background-position: bottom;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero .author {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Prompting Section */
+        .prompting {
+            background: white;
+        }
+
+        .prompt-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .prompt-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .prompt-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .prompt-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+        }
+
+        .prompt-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            color: var(--dark);
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        /* AI Hub Link */
+        .ai-hub-link {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 1rem;
+            padding: 3rem;
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .ai-hub-link h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .ai-hub-link p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            opacity: 0.95;
+        }
+
+        .ai-hub-link a {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.3s;
+        }
+
+        .ai-hub-link a:hover {
+            transform: scale(1.05);
+        }
+
+        /* AI Tools Section */
+        .ai-tools {
+            background: var(--light);
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .tool-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .tool-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .tool-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .badge-blue {
+            background: #bee3f8;
+            color: #2c5282;
+        }
+
+        .badge-green {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .badge-purple {
+            background: #e9d8fd;
+            color: #553c9a;
+        }
+
+        /* Example Section */
+        .example {
+            background: white;
+        }
+
+        .example-card {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border: 2px solid #667eea30;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .example-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .example-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .example-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .example-description {
+            font-size: 1.1rem;
+            color: var(--gray);
+            line-height: 1.7;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-title {
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .example-link {
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .example-link a {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.25rem 2.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .example-link a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Team Section */
+        .team {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+        }
+
+        .team .section-title,
+        .team .section-subtitle {
+            color: white;
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .team-intro {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .announcement {
+            background: rgba(250, 204, 21, 0.2);
+            border: 2px solid #facc15;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .team-activities {
+            margin-top: 2rem;
+        }
+
+        .team-activities h3 {
+            font-size: 1.75rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .activity-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .activity-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .activity-text {
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        footer .copyright {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .prompt-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+
+            .copy-btn {
+                width: 100%;
+            }
+
+            .tools-grid,
+            .features-grid,
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .example-card,
+            .team-card {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50">
+<body>
     <!-- Navigation -->
-    <nav class="fixed w-full bg-white shadow-md z-50">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <div class="text-xl font-bold text-gray-800">
-                    Мастер-класс по ИИ
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#prompting" class="nav-link text-gray-600 hover:text-gray-800">Промптинг</a>
-                    <a href="#ai-tools" class="nav-link text-gray-600 hover:text-gray-800">ИИ-сервисы</a>
-                    <a href="#example" class="nav-link text-gray-600 hover:text-gray-800">Пример</a>
-                    <a href="#team" class="nav-link text-gray-600 hover:text-gray-800">Команда</a>
-                </div>
-            </div>
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">Мастер-класс по ИИ</div>
+            <ul class="nav-links">
+                <li><a href="#prompting">Промптинг</a></li>
+                <li><a href="#ai-tools">ИИ-сервисы</a></li>
+                <li><a href="#example">Пример</a></li>
+                <li><a href="#team">Команда</a></li>
+            </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="gradient-bg text-white pt-32 pb-20">
-        <div class="container mx-auto px-6 text-center fade-in">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6">
-                Вводный мастер-класс по ИИ
-            </h1>
-            <p class="text-xl md:text-2xl mb-4 opacity-90">
-                Современные инструменты для учителей информатики
-            </p>
-            <div class="mt-8 text-lg opacity-80">
-                <p class="mb-2">Масликов Михаил Михайлович</p>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Вводный мастер-класс по ИИ</h1>
+            <p class="subtitle">Современные инструменты для учителей информатики</p>
+            <div class="author">
+                <p><strong>Масликов Михаил Михайлович</strong></p>
                 <p>ЧОУ "ОК Точка будущего"</p>
             </div>
         </div>
     </section>
 
-    <!-- Section 1: Prompting -->
-    <section id="prompting" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
-                🎯 Промптинг
-            </h2>
-            <p class="text-center text-gray-600 mb-12 text-lg">
-                Три основных промта для создания качественного урока
-            </p>
+    <!-- Prompting Section -->
+    <section id="prompting" class="prompting">
+        <div class="container">
+            <h2 class="section-title">🎯 Промптинг</h2>
+            <p class="section-subtitle">Три основных промта для создания качественного урока</p>
 
-            <div class="grid md:grid-cols-1 gap-8 max-w-5xl mx-auto">
-                <!-- Prompt 1 -->
-                <div class="prompt-card rounded-xl p-8 card-hover">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-2xl font-bold text-gray-800">
-                            Шаг 1: Создание плана урока
-                        </h3>
-                        <button onclick="copyPrompt(1)" class="copy-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
-                            Копировать
-                        </button>
-                    </div>
-                    <div id="prompt1" class="bg-white rounded-lg p-6 text-gray-700 leading-relaxed">
-                        Ты — опытный учитель информатики. Составь план урока по теме «[тема]» для [класс], [длительность] минут. Структура: оргмомент, актуализация, объяснение нового материала, практическая часть, рефлексия — с таймингом каждого этапа и практическим заданием.
-                    </div>
+            <div class="prompt-card">
+                <div class="prompt-header">
+                    <h3 class="prompt-title">Шаг 1: Создание плана урока</h3>
+                    <button class="copy-btn" onclick="copyPrompt(1)">Копировать</button>
                 </div>
-
-                <!-- Prompt 2 -->
-                <div class="prompt-card rounded-xl p-8 card-hover">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-2xl font-bold text-gray-800">
-                            Шаг 2: Рецензия методиста
-                        </h3>
-                        <button onclick="copyPrompt(2)" class="copy-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
-                            Копировать
-                        </button>
-                    </div>
-                    <div id="prompt2" class="bg-white rounded-lg p-6 text-gray-700 leading-relaxed">
-                        Ты — методист, эксперт по проверке качества уроков информатики. Не переписывай урок сам — дай только рецензию. Оцени план урока ниже по критериям: соответствие возрасту, реалистичность тайминга, наличие практики, дифференциация для сильных/слабых учеников, вовлечённость. По каждому критерию — конкретная рекомендация.<br><br>
-                        ПЛАН УРОКА: [вставьте черновик из Шага 1]
-                    </div>
-                </div>
-
-                <!-- Prompt 3 -->
-                <div class="prompt-card rounded-xl p-8 card-hover">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="text-2xl font-bold text-gray-800">
-                            Шаг 3: Оценка аттестационной комиссии
-                        </h3>
-                        <button onclick="copyPrompt(3)" class="copy-btn bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold">
-                            Копировать
-                        </button>
-                    </div>
-                    <div id="prompt3" class="bg-white rounded-lg p-6 text-gray-700 leading-relaxed">
-                        Ты — аттестационная комиссия, оценивающая план урока по формальным критериям. Оцени по 5-балльной шкале каждый критерий: соответствие программе, практическая ценность, вовлечённость, реалистичность тайминга, дифференциация. Дай итоговый балл и 2-3 замечания. Рекомендаций не давай — только оценку, как в реальном протоколе.<br><br>
-                        ПЛАН УРОКА: [вставьте исправленную версию после Шага 2]
-                    </div>
+                <div class="prompt-content" id="prompt1">
+                    Ты — опытный учитель информатики. Составь план урока по теме «[тема]» для [класс], [длительность] минут. Структура: оргмомент, актуализация, объяснение нового материала, практическая часть, рефлексия — с таймингом каждого этапа и практическим заданием.
                 </div>
             </div>
 
-            <!-- AI Hub Link -->
-            <div class="mt-12 text-center">
-                <div class="inline-block bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl p-8 max-w-3xl">
-                    <h3 class="text-2xl font-bold text-white mb-4">
-                        🚀 Автоматическое создание промтов
-                    </h3>
-                    <p class="text-white mb-6 opacity-90">
-                        Сервис для генерации любых промтов под ваши задачи
-                    </p>
-                    <a href="https://mashuk.online/aihub" target="_blank" class="inline-block bg-white text-purple-600 font-bold px-8 py-3 rounded-lg hover:bg-gray-100 transition-all">
-                        Перейти на mashuk.online/aihub →
-                    </a>
+            <div class="prompt-card">
+                <div class="prompt-header">
+                    <h3 class="prompt-title">Шаг 2: Рецензия методиста</h3>
+                    <button class="copy-btn" onclick="copyPrompt(2)">Копировать</button>
                 </div>
+                <div class="prompt-content" id="prompt2">
+                    Ты — методист, эксперт по проверке качества уроков информатики. Не переписывай урок сам — дай только рецензию. Оцени план урока ниже по критериям: соответствие возрасту, реалистичность тайминга, наличие практики, дифференциация для сильных/слабых учеников, вовлечённость. По каждому критерию — конкретная рекомендация.<br><br>
+                    ПЛАН УРОКА: [вставьте черновик из Шага 1]
+                </div>
+            </div>
+
+            <div class="prompt-card">
+                <div class="prompt-header">
+                    <h3 class="prompt-title">Шаг 3: Оценка аттестационной комиссии</h3>
+                    <button class="copy-btn" onclick="copyPrompt(3)">Копировать</button>
+                </div>
+                <div class="prompt-content" id="prompt3">
+                    Ты — аттестационная комиссия, оценивающая план урока по формальным критериям. Оцени по 5-балльной шкале каждый критерий: соответствие программе, практическая ценность, вовлечённость, реалистичность тайминга, дифференциация. Дай итоговый балл и 2-3 замечания. Рекомендаций не давай — только оценку, как в реальном протоколе.<br><br>
+                    ПЛАН УРОКА: [вставьте исправленную версию после Шага 2]
+                </div>
+            </div>
+
+            <div class="ai-hub-link">
+                <h3>🚀 Автоматическое создание промтов</h3>
+                <p>Сервис для генерации любых промтов под ваши задачи</p>
+                <a href="https://mashuk.online/aihub" target="_blank">Перейти на mashuk.online/aihub →</a>
             </div>
         </div>
     </section>
 
-    <!-- Section 2: AI Tools -->
-    <section id="ai-tools" class="py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
-                🤖 Основные ИИ-сервисы
-            </h2>
-            <p class="text-center text-gray-600 mb-12 text-lg">
-                Лучшие инструменты для работы учителя
-            </p>
+    <!-- AI Tools Section -->
+    <section id="ai-tools" class="ai-tools">
+        <div class="container">
+            <h2 class="section-title">🤖 Основные ИИ-сервисы</h2>
+            <p class="section-subtitle">Лучшие инструменты для работы учителя</p>
 
-            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                <!-- Gigachad -->
-                <div class="ai-card rounded-xl p-8 card-hover border-2 border-transparent hover:border-blue-500">
-                    <div class="text-6xl mb-4 text-center">🏆</div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">
-                        Гигачад
-                    </h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">🏆</div>
+                    <h3 class="tool-title">Гигачад</h3>
+                    <p class="tool-description">
                         Лучший ИИ в русскоязычном сегменте. Отличное понимание контекста, качественная генерация текстов и кода на русском языке.
                     </p>
-                    <div class="text-center">
-                        <span class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold">
-                            Лучший в RU
-                        </span>
-                    </div>
+                    <span class="tool-badge badge-blue">Лучший в RU</span>
                 </div>
 
-                <!-- Perplexity -->
-                <div class="ai-card rounded-xl p-8 card-hover border-2 border-transparent hover:border-green-500">
-                    <div class="text-6xl mb-4 text-center">📚</div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">
-                        Perplexity
-                    </h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
+                <div class="tool-card">
+                    <div class="tool-icon">📚</div>
+                    <h3 class="tool-title">Perplexity</h3>
+                    <p class="tool-description">
                         Создание пространств (проектов) с заданными характеристиками и вложенными документами. Идеально для работы с ФГОС и методическими материалами.
                     </p>
-                    <div class="text-center">
-                        <span class="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-semibold">
-                            Работа с документами
-                        </span>
-                    </div>
+                    <span class="tool-badge badge-green">Работа с документами</span>
                 </div>
 
-                <!-- Qwen -->
-                <div class="ai-card rounded-xl p-8 card-hover border-2 border-transparent hover:border-purple-500">
-                    <div class="text-6xl mb-4 text-center">🎨</div>
-                    <h3 class="text-2xl font-bold text-gray-800 mb-4 text-center">
-                        Qwen
-                    </h3>
-                    <p class="text-gray-600 mb-6 leading-relaxed">
+                <div class="tool-card">
+                    <div class="tool-icon">🎨</div>
+                    <h3 class="tool-title">Qwen</h3>
+                    <p class="tool-description">
                         Работа с артефактами. Создание интерактивных материалов, визуализаций и сложных структурированных документов.
                     </p>
-                    <div class="text-center">
-                        <span class="inline-block bg-purple-100 text-purple-800 px-4 py-2 rounded-full text-sm font-semibold">
-                            Артефакты
-                        </span>
-                    </div>
+                    <span class="tool-badge badge-purple">Артефакты</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 3: Example -->
-    <section id="example" class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
-                💡 Пример методической разработки
-            </h2>
-            <p class="text-center text-gray-600 mb-12 text-lg">
-                Современный подход к созданию учебных материалов
-            </p>
+    <!-- Example Section -->
+    <section id="example" class="example">
+        <div class="container">
+            <h2 class="section-title">💡 Пример методической разработки</h2>
+            <p class="section-subtitle">Современный подход к созданию учебных материалов</p>
 
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12 border-2 border-blue-200">
-                    <div class="text-center mb-8">
-                        <div class="text-6xl mb-4">📖</div>
-                        <h3 class="text-3xl font-bold text-gray-800 mb-4">
-                            DataMirror
-                        </h3>
-                        <p class="text-gray-600 text-lg leading-relaxed">
-                            Полноценная методическая разработка для проведения урока. Все материалы для учителя и ученика в одном месте.
-                        </p>
-                    </div>
+            <div class="example-card">
+                <div class="example-header">
+                    <div class="example-icon">📖</div>
+                    <h3 class="example-title">DataMirror</h3>
+                    <p class="example-description">
+                        Полноценная методическая разработка для проведения урока. Все материалы для учителя и ученика в одном месте.
+                    </p>
+                </div>
 
-                    <div class="grid md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-white rounded-lg p-6">
-                            <div class="text-2xl mb-2">✅</div>
-                            <h4 class="font-bold text-gray-800 mb-2">Для учителя</h4>
-                            <p class="text-gray-600 text-sm">
-                                Подробный план урока, методические указания, материалы для объяснения
-                            </p>
-                        </div>
-                        <div class="bg-white rounded-lg p-6">
-                            <div class="text-2xl mb-2">🎓</div>
-                            <h4 class="font-bold text-gray-800 mb-2">Для ученика</h4>
-                            <p class="text-gray-600 text-sm">
-                                Интерактивные задания, практические работы, материалы для самостоятельной работы
-                            </p>
-                        </div>
-                        <div class="bg-white rounded-lg p-6">
-                            <div class="text-2xl mb-2">🎨</div>
-                            <h4 class="font-bold text-gray-800 mb-2">Современный дизайн</h4>
-                            <p class="text-gray-600 text-sm">
-                                Удобный интерфейс, адаптивная верстка, приятная визуализация
-                            </p>
-                        </div>
-                        <div class="bg-white rounded-lg p-6">
-                            <div class="text-2xl mb-2">⚡</div>
-                            <h4 class="font-bold text-gray-800 mb-2">Интерактивность</h4>
-                            <p class="text-gray-600 text-sm">
-                                Динамические элементы, мгновенная обратная связь, вовлекающий контент
-                            </p>
-                        </div>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">✅</div>
+                        <div class="feature-title">Для учителя</div>
+                        <div class="feature-description">Подробный план урока, методические указания, материалы для объяснения</div>
                     </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎓</div>
+                        <div class="feature-title">Для ученика</div>
+                        <div class="feature-description">Интерактивные задания, практические работы, материалы для самостоятельной работы</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎨</div>
+                        <div class="feature-title">Современный дизайн</div>
+                        <div class="feature-description">Удобный интерфейс, адаптивная верстка, приятная визуализация</div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">⚡</div>
+                        <div class="feature-title">Интерактивность</div>
+                        <div class="feature-description">Динамические элементы, мгновенная обратная связь, вовлекающий контент</div>
+                    </div>
+                </div>
 
-                    <div class="text-center">
-                        <a href="https://mmmaslikov.github.io/datamirror/" target="_blank" class="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold px-8 py-4 rounded-lg hover:shadow-xl transition-all text-lg">
-                            Открыть методическую разработку →
-                        </a>
-                    </div>
+                <div class="example-link">
+                    <a href="https://mmmaslikov.github.io/datamirror/" target="_blank">Открыть методическую разработку →</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Section 4: Team -->
-    <section id="team" class="py-20 gradient-bg text-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-4xl font-bold text-center mb-4">
-                🌟 Творческая проектировочная группа
-            </h2>
-            <p class="text-center text-xl mb-12 opacity-90">
-                Присоединяйтесь к команде инноваторов
-            </p>
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <h2 class="section-title">🌟 Творческая проектировочная группа</h2>
+            <p class="section-subtitle">Присоединяйтесь к команде инноваторов</p>
 
-            <div class="max-w-4xl mx-auto">
-                <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-8 md:p-12 border border-white border-opacity-20">
-                    <div class="text-center mb-8">
-                        <p class="text-lg leading-relaxed mb-6">
-                            В нашей школе создаются творческие проектировочные группы педагогов, которые будут работать над актуальными темами и создавать современные образовательные продукты.
-                        </p>
-                        <div class="bg-yellow-400 bg-opacity-20 border-2 border-yellow-400 rounded-xl p-6 mb-8">
-                            <p class="text-xl font-bold">
-                                📢 Скоро будет опубликована анкета для учителей, которые хотят стать частью моей команды!
-                            </p>
+            <div class="team-card">
+                <div class="team-intro">
+                    <p>
+                        В нашей школе создаются творческие проектировочные группы педагогов, которые будут работать над актуальными темами и создавать современные образовательные продукты.
+                    </p>
+                </div>
+
+                <div class="announcement">
+                    📢 Скоро будет опубликована анкета для учителей, которые хотят стать частью моей команды!
+                </div>
+
+                <div class="team-activities">
+                    <h3>Чем мы будем заниматься:</h3>
+                    <div class="activities-grid">
+                        <div class="activity-item">
+                            <span class="activity-icon">📝</span>
+                            <span class="activity-text">Создавать современные методические разработки</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">🌐</span>
+                            <span class="activity-text">Создавать образовательные сайты</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">🎨</span>
+                            <span class="activity-text">Использовать нейросети для создания презентаций и документов</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">📊</span>
+                            <span class="activity-text">Анализировать большие объемы информации</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">️</span>
+                            <span class="activity-text">Упрощать рутинную работу учителей с помощью ИИ-инструментов</span>
                         </div>
                     </div>
+                </div>
 
-                    <h3 class="text-2xl font-bold mb-6 text-center">Чем мы будем заниматься:</h3>
-                    
-                    <div class="grid md:grid-cols-2 gap-4 mb-8">
-                        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex items-start">
-                            <span class="text-2xl mr-3">📝</span>
-                            <span>Создавать современные методические разработки</span>
-                        </div>
-                        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex items-start">
-                            <span class="text-2xl mr-3">🌐</span>
-                            <span>Создавать образовательные сайты</span>
-                        </div>
-                        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex items-start">
-                            <span class="text-2xl mr-3">🎨</span>
-                            <span>Использовать нейросети для создания презентаций и документов</span>
-                        </div>
-                        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex items-start">
-                            <span class="text-2xl mr-3">📊</span>
-                            <span>Анализировать большие объемы информации</span>
-                        </div>
-                        <div class="bg-white bg-opacity-10 rounded-lg p-4 flex items-start md:col-span-2">
-                            <span class="text-2xl mr-3">⚙️</span>
-                            <span>Упрощать рутинную работу учителей с помощью ИИ-инструментов</span>
-                        </div>
-                    </div>
-
-                    <div class="text-center">
-                        <p class="text-lg opacity-90">
-                            Следите за обновлениями и станьте частью команды, которая меняет образование!
-                        </p>
-                    </div>
+                <div class="team-intro" style="margin-top: 2rem;">
+                    <p>Следите за обновлениями и станьте частью команды, которая меняет образование!</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p class="mb-2">Масликов Михаил Михайлович</p>
-            <p class="text-gray-400">ЧОУ "ОК Точка будущего" | 2026</p>
-        </div>
+    <footer>
+        <p><strong>Масликов Михаил Михайлович</strong></p>
+        <p class="copyright">ЧОУ "ОК Точка будущего" | 2026</p>
     </footer>
 
     <script>
@@ -396,16 +802,15 @@
                 const originalText = button.innerText;
                 
                 button.innerText = '✓ Скопировано!';
-                button.classList.remove('bg-blue-500', 'hover:bg-blue-600');
-                button.classList.add('bg-green-500');
+                button.classList.add('copied');
                 
                 setTimeout(() => {
                     button.innerText = originalText;
-                    button.classList.remove('bg-green-500');
-                    button.classList.add('bg-blue-500', 'hover:bg-blue-600');
+                    button.classList.remove('copied');
                 }, 2000);
             }).catch(err => {
                 console.error('Ошибка копирования:', err);
+                alert('Не удалось скопировать текст');
             });
         }
 
